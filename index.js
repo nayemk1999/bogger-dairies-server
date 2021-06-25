@@ -32,9 +32,9 @@ client.connect(err => {
     });
 
 
-    app.get('/manageBlogs', (req, res) => {
+    app.get('/admin', (req, res) => {
         const userEmail = req.query.email
-        blogsCollection.find({ email: userEmail })
+        adminsCollection.find({ email: userEmail })
             .toArray((error, document) => {
                 res.send(document)
             })
@@ -42,6 +42,13 @@ client.connect(err => {
     app.get('/allBlogs', (req, res) => {
 
         blogsCollection.find({})
+            .toArray((error, document) => {
+                res.send(document)
+            })
+    })
+    app.get('/manageProducts', (req, res) => {
+        const userEmail = req.query.email
+        productsCollection.find({email: userEmail})
             .toArray((error, document) => {
                 res.send(document)
             })
@@ -60,6 +67,7 @@ client.connect(err => {
                 res.send(document[0])
             })
     });
+
 
 });
 
