@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 require('dotenv').config()
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
-const port = 3003
-const {DB_NAME, DB_PASS, DB_USER} = process.env
+
+const { DB_NAME, DB_PASS, DB_USER } = process.env
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
@@ -34,7 +34,7 @@ client.connect(err => {
 
     app.get('/manageBlogs', (req, res) => {
         const userEmail = req.query.email
-        blogsCollection.find({email: userEmail})
+        blogsCollection.find({ email: userEmail })
             .toArray((error, document) => {
                 res.send(document)
             })
@@ -53,11 +53,12 @@ client.connect(err => {
                 res.send(document[0])
             })
     })
-    app.get('/blog/:id', (req, res) => {
+    app.get('/single-blog/:id', (req, res) => {
         const id = ObjectID(req.params.id)
         blogsCollection.find({ _id: id })
-            .then(result => console.log(result))
-                // res.send(result.deletedCount > 0))
+            .toArray((error, document) => {
+                res.send(document[0])
+            })
     });
 
 });
@@ -67,4 +68,4 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.listen(port || 3003)
+app.listen(process.env.PORT || 3003)
