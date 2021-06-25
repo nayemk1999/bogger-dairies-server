@@ -7,6 +7,7 @@ const ObjectID = require('mongodb').ObjectID;
 
 const { DB_NAME, DB_PASS, DB_USER } = process.env
 const app = express()
+const port = 3005
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -76,4 +77,4 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.listen(process.env.PORT || 3003)
+app.listen(process.env.PORT || port)
